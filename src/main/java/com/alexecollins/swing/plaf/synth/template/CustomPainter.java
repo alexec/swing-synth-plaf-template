@@ -23,34 +23,25 @@ public class CustomPainter extends SynthPainter {
     }
 
     private void paintBorder(SynthContext context, Graphics g, int x, int y, int w, int h) {
-        // For simplicity this always recreates the GradientPaint. In a
-        // real app you should cache this to avoid garbage.
         Graphics2D g2 = (Graphics2D)g;
 
-        // bug in list rendering
-        int arc = getArc(context);
-
+        final int arc = getArc(context);
         final boolean isFocused = (context.getComponentState() & SynthConstants.FOCUSED) > 0;
 
         g2.setColor(context.getStyle().getColor(context, ColorType.BACKGROUND));
         g2.fillRoundRect(x + 1, y + 1, w - 3, h - 3, arc, arc);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setColor(createTransparentColor(isFocused ? getHighlight(context) : context.getStyle().getColor(context, ColorType.FOREGROUND)));
+        g2.setColor(isFocused ? getHighlight(context) : context.getStyle().getColor(context, ColorType.FOREGROUND));
         g2.setStroke(thin);
         g2.drawRoundRect(x, y, w - 1, h - 1, arc, arc);
     }
 
-    private int getArc(SynthContext context) {
-        return context.getComponent() instanceof JList ? 0 : 5;
-    }
-
-    private static Insets getInset(SynthContext context) {
-        return context.getStyle().getInsets(context,new Insets(0,0,0,0));
-    }
-
+	private int getArc(SynthContext context) {
+	    // lists appear to mess up arcs
+	    return context.getComponent() instanceof JList ? 0 : 5;
+	}
 
     private void paintVerticalGradient(SynthContext context, Graphics g, int x, int y, int w, int h) {
-        // http://nadeausoftware.com/node/85
         final Color bg = context.getStyle().getColor(context, ColorType.BACKGROUND);
         final int arc = getArc(context);
         Graphics2D g2 = (Graphics2D)g;
@@ -63,7 +54,9 @@ public class CustomPainter extends SynthPainter {
     }
 
     private GradientPaint getGradient(SynthContext context, int x, int y, int h, Color bg) {
-        final boolean mouseOver = (context.getComponentState() & SynthConstants.MOUSE_OVER) > 0;
+	    // For simplicity this always recreates the GradientPaint. In a
+	    // real app you should cache this to avoid garbage.
+	    final boolean mouseOver = (context.getComponentState() & SynthConstants.MOUSE_OVER) > 0;
         return new GradientPaint(x, y, bg, x, y + h, mouseOver ? getHighlight(context) : bg.darker().darker());
     }
 
@@ -77,20 +70,20 @@ public class CustomPainter extends SynthPainter {
         return new Color(color.getRed(), color.getGreen(), color.getBlue(), 0x88);
     }
 
-    @Override
-    public void paintPanelBackground(SynthContext context, Graphics graphics, int x, int y, int w, int h) {
-        Graphics2D g2 = (Graphics2D)graphics;
-        // tile the image
-        int x1 = x;
-        while (y < h) {
-            x = x1;
-            while (x < w) {
-                g2.drawImage(background, x,y, null);
-                x+=background.getWidth(null);
-            }
-            y+=background.getHeight(null);
-        }
-    }
+	@Override
+	public void paintPanelBackground(SynthContext context, Graphics graphics, int x, int y, int w, int h) {
+	    Graphics2D g2 = (Graphics2D)graphics;
+	    // tile the image
+	    int x1 = x;
+	    while (y < h) {
+	        x = x1;
+	        while (x < w) {
+	            g2.drawImage(background, x, y, null);
+	            x += background.getWidth(null);
+	        }
+	        y += background.getHeight(null);
+	    }
+	}
 
     @Override
     public void paintTextFieldBackground(SynthContext context,Graphics g, int x, int y,int w, int h) {
@@ -120,7 +113,6 @@ public class CustomPainter extends SynthPainter {
     @Override
     public void paintButtonBackground(SynthContext context,Graphics g, int x, int y,int w, int h) {
         paintVerticalGradient(context, g, x, y, w, h);
-
     }
 
     @Override
@@ -130,58 +122,63 @@ public class CustomPainter extends SynthPainter {
 
         g2.setColor(createTransparentColor(context.getStyle().getColor(context, ColorType.BACKGROUND).darker().darker()));
         g2.fillRoundRect(x + 1, y + 1, w - 2, h - 2, arc, arc);
-        g2.setPaint(null);
     }
+
     @Override
     public void paintComboBoxBackground(SynthContext context, Graphics graphics, int x, int y, int w, int h) {
         paintVerticalGradient(context,graphics,x,y,w,h);
     }
 
     @Override
-    public void paintCheckBoxBackground(SynthContext context, Graphics graphics, int x, int y, int w, int h) {
-        final Insets i = getInset(context);
-        x+=i.top;y+=i.top;h-=i.top+i.bottom;
+    public void paintCheckBoxBackground(SynthContext context, Graphics g, int x, int y, int w, int h) {
+	    final int l = getKnobSize(context);
+	    final int x1 = x + context.getStyle().getInsets(context, new Insets(0,0,0,0)).right;
+	    final int y1 = y + (h - l) / 2;
 
-        paintVerticalGradient(context,graphics,x,y,h,h);
+	    paintVerticalGradient(context, g, x1, y1, l, l);
 
         final boolean isSelected = (context.getComponentState() & SynthConstants.SELECTED) > 0;
 
         if (isSelected) {
-            Graphics2D g2 = (Graphics2D)graphics;
+            Graphics2D g2 = (Graphics2D)g;
             int a = getArc(context);
             g2.setStroke(thin);
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.drawPolyline(new int[]{x + a, x + h / 2, x + h}, new int[]{y + h / 2, y + h - a, y}, 3);
+            g2.drawPolyline(new int[]{x1 + a, x1 + l / 2, x1 + l}, new int[]{y1 + l / 2, y1 + l - a, y1}, 3);
         }
     }
 
     @Override
     public void paintRadioButtonBackground(SynthContext context, Graphics g, int x, int y, int w, int h)  {
-        final Insets i = getInset(context);
-
-        x+=i.top;y+=i.top;h-=i.top+i.bottom;
+	    // indicates the size of the radio
+        final int l = getKnobSize(context);
+	    final int x1 = x + (h - l) / 2;
+	    final int y1 = y + (h - l) / 2;
 
         final Color bg = context.getStyle().getColor(context, ColorType.BACKGROUND);
         Graphics2D g2 = (Graphics2D)g;
-        g2.setPaint(getGradient(context, x, y, h, bg));
-        g2.fillOval(x, y, h - 1, h - 1);
+        g2.setPaint(getGradient(context, x1, y1, l, bg));
+        g2.fillOval(x1, y1, l - 1, l - 1);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(context.getStyle().getColor(context, ColorType.FOREGROUND));
         g2.setStroke(thin);
-        g2.drawOval(x, y, h - 1, h - 1);
+        g2.drawOval(x1, y1, l - 1, l - 1);
         final boolean isSelected = (context.getComponentState() & SynthConstants.SELECTED) > 0;
 
         if (isSelected) {
             int a = getArc(context);
-            g2.fillOval(x + a, y + a, h - 2*a, h - 2*a);
+            g2.fillOval(x1 + a, y1 + a, l - 2*a, l - 2*a);
         }
     }
 
-    @Override
+	private static int getKnobSize(final SynthContext context) {
+		return context.getStyle().getFont(context).getSize();
+	}
+
+	@Override
     public void paintProgressBarBackground(SynthContext context, Graphics graphics, int x, int y, int w, int h) {
-        JProgressBar c = (JProgressBar) context.getComponent();
-        paintBorder(context, graphics, x, y, w, h);
-        paintVerticalGradient(context, graphics, x, y, (int)(w * c.getPercentComplete()), h);
+		paintBorder(context, graphics, x, y, w, h);
+        paintVerticalGradient(context, graphics, x, y, (int)(w * ((JProgressBar) context.getComponent()).getPercentComplete()), h);
     }
 
     @Override

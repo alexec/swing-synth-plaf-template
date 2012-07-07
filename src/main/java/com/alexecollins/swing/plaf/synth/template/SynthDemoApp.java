@@ -17,7 +17,7 @@ public class SynthDemoApp {
             public void run() {
                 SynthLookAndFeel synth = new SynthLookAndFeel();
                 try {
-                    synth.load(DemoFrame.class.getResourceAsStream("synth.xml"), DemoFrame.class);
+                    synth.load(CustomPainter.class.getResourceAsStream("synth.xml"), CustomPainter.class);
                     UIManager.setLookAndFeel(synth);
                     final DemoFrame f = new DemoFrame();
                     f.addWindowListener(new WindowAdapter() {
