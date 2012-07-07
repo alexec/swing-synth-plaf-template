@@ -1,0 +1,95 @@
+<!--
+    http://docs.oracle.com/javase/6/docs/api/javax/swing/plaf/synth/doc-files/synth.dtd
+    http://docs.oracle.com/javase/6/docs/api/javax/swing/plaf/synth/doc-files/componentProperties.html
+-->
+<synth>
+    <object class="javax.swing.plaf.ColorUIResource" id="colorWhite">
+        <int>255</int><int>255</int><int>255</int>
+    </object>
+    <!-- A custom painter allows us to finely control the look of components. -->
+    <object id="painter" class="com.alexecollins.swing.plaf.synth.template.CustomPainter"/>
+
+    <!-- A number of synth components will throw a NullPointerException of you do not provide defaults. -->
+    <style id="default">
+        <opaque value="false"/>
+        <!-- A handy list of fonts that you can use: http://www.ampsoft.net/webdesign-l/WindowsMacFonts.html -->
+        <font name="Lucida Sans Unicode" size="12"/>
+        <state>
+            <color value="#000000" type="FOREGROUND"/>
+            <color value="#ffffff" type="TEXT_BACKGROUND"/>
+            <!-- The color used in highlighting components. -->
+            <color value="#333399" type="FOCUS"/>
+        </state>
+        <insets top="5" right="5" bottom="5" left="5"/>
+    </style>
+    <bind style="default" type="region" key=".*"/>
+
+    <style id="panel">
+        <painter method="panelBackground" idref="painter"/>
+    </style>
+    <bind style="panel" type="region" key="Panel"/>
+
+    <!-- Many components are composite, and in the XML, ordering is important, this needs to be before
+     textfield -->
+    <style id="colorchooser">
+        <property key="ColorChooser.swatchesDefaultRecentColor" type="idref" value="colorWhite"/>
+        <property key="ColorChooser.swatchesSwatchSize" type="dimension" value="10 10"/>
+        <property key="ColorChooser.swatchesRecentSwatchSize" type="dimension" value="10 10"/>
+    </style>
+    <bind style="colorchooser" type="region" key="ColorChooser"/>
+
+    <style id="textfield"><painter method="textFieldBackground" idref="painter"/></style>
+    <bind style="textfield" type="region" key="TextField"/>
+
+    <style id="passwordfield"><painter method="passwordFieldBackground" idref="painter"/></style>
+    <bind style="passwordfield" type="region" key="PasswordField"/>
+
+    <style id="textarea"><painter method="textAreaBackground" idref="painter"/></style>
+    <bind style="textarea" type="region" key="TextArea"/>
+
+    <style id="editorpane"><opaque value="true"/>
+        <painter method="textEditorPaneBackground" idref="painter"/></style>
+    <bind style="editorpane" type="region" key="EditorPane"/>
+
+    <style id="list"><painter method="listBackground" idref="painter"/>
+        <state><color type="TEXT_BACKGROUND" value="#6666ff"/></state></style>
+    <bind style="list" type="region" key="List"/>
+
+    <style id="spinner"><painter method="spinnerBackground" idref="painter"/></style>
+    <bind style="spinner" type="region" key="Spinner"/>
+
+    <style id="button"><painter method="buttonBackground" idref="painter"/></style>
+    <bind style="button" type="region" key="Button"/>
+
+    <style id="combobox"><painter method="comboBoxBackground" idref="painter"/>
+        <!-- default insets ugly -->
+        <insets top="0" right="0" bottom="0" left="0"/></style>
+    <bind style="combobox" type="region" key="ComboBox"/>
+
+    <style id="checkbox"><painter idref="painter" method="checkBoxBackground"/>
+        <insets top="5" right="5" bottom="5" left="25"/></style>
+    <bind style="checkbox" type="region" key="CheckBox"/>
+
+    <style id="radiobutton"><painter method="radioButtonBackground" idref="painter"/>
+        <insets top="5" right="5" bottom="5" left="25"/></style>
+    <bind style="radiobutton" type="region" key="RadioButton"/>
+
+    <style id="progressbar"><painter method="progressBarBackground" idref="painter"/></style>
+    <bind style="progressbar" type="region" key="ProgressBar"/>
+
+    <!-- http://www.javalobby.org/java/forums/t49282.html -->
+    <style id="scrollBarArrowStyle"><property key="ArrowButton.size" type="integer" value="0" /></style>
+    <bind style="scrollBarArrowStyle" type="REGION" key="ArrowButton" />
+
+    <style id="scrollBarThumbStyle"><painter method="scrollBarThumbBackground" idref="painter"/></style>
+    <bind style="scrollBarThumbStyle" type="REGION" key="ScrollBarThumb" />
+
+    <style id="scrollbarTrackStyle">
+        <opaque value="true"/>
+        <state>
+            <insets top="1" right="1" bottom="1" left="1"/>
+            <color value="#ffffff" type="BACKGROUND"/>
+        </state>
+    </style>
+    <bind style="scrollbarTrackStyle" type="REGION" key="ScrollBarTrack" />
+</synth>
