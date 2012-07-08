@@ -6,8 +6,8 @@
     <object class="javax.swing.plaf.ColorUIResource" id="fg"><int>0</int><int>0</int><int>0</int></object>
     <object class="javax.swing.plaf.ColorUIResource" id="bg"><int>255</int><int>255</int><int>255</int></object>
     <object class="javax.swing.plaf.ColorUIResource" id="focus"><int>50</int><int>50</int><int>127</int></object>
-    <object class="javax.swing.plaf.ColorUIResource" id="primaryfg"><int>255</int><int>255</int><int>255</int></object>
-    <object class="javax.swing.plaf.ColorUIResource" id="primarybg"><int>50</int><int>50</int><int>50</int></object>
+    <object class="javax.swing.plaf.ColorUIResource" id="primaryfg"><int>0</int><int>0</int><int>0</int></object>
+    <object class="javax.swing.plaf.ColorUIResource" id="primarybg"><int>100</int><int>100</int><int>255</int></object>
 
     <!-- A custom painter allows us to finely control the look of components. -->
     <object id="painter" class="com.alexecollins.swing.plaf.synth.template.CustomPainter"/>
@@ -44,6 +44,16 @@
     </style>
     <bind style="panel" type="region" key="Panel"/>
 
+    <style id="hover">
+        <state value="MOUSE_OVER">
+            <color idref="focus" type="FOREGROUND"/>
+        </state>
+    </style>
+    <bind style="hover" type="region" key="Button"/>
+    <bind style="hover" type="region" key="ComboBox"/>
+    <bind style="hover" type="region" key="CheckBox"/>
+    <bind style="hover" type="region" key="RadioButton"/>
+
     <!-- Many components are composite, and in the XML, ordering is important, this needs to be before
      textfield -->
     <style id="colorchooser">
@@ -79,12 +89,20 @@
     <style id="combobox"><painter method="comboBoxBackground" idref="painter"/></style>
     <bind style="combobox" type="region" key="ComboBox"/>
 
-    <style id="checkbox"><painter idref="painter" method="checkBoxBackground"/>
-        <insets top="5" right="5" bottom="5" left="25"/></style>
+    <style id="checkbox">
+        <object id="checkOff" class="com.alexecollins.swing.plaf.synth.template.CheckBoxOffIcon"><int>16</int></object>
+        <object id="checkOn" class="com.alexecollins.swing.plaf.synth.template.CheckBoxOnIcon"><int>16</int></object>
+        <property key="CheckBox.icon" type="idref" value="checkOff"/>
+        <state value="SELECTED"><property key="CheckBox.icon" type="idref" value="checkOn"/></state>
+    </style>
     <bind style="checkbox" type="region" key="CheckBox"/>
 
-    <style id="radiobutton"><painter method="radioButtonBackground" idref="painter"/>
-        <insets top="5" right="5" bottom="5" left="25"/></style>
+    <style id="radiobutton">
+        <object id="radioOff" class="com.alexecollins.swing.plaf.synth.template.RadioButtonOffIcon"><int>16</int></object>
+        <object id="radioOn" class="com.alexecollins.swing.plaf.synth.template.RadioButtonOnIcon"><int>16</int></object>
+        <property key="RadioButton.icon" type="idref" value="radioOff"/>
+        <state value="SELECTED"><property key="RadioButton.icon" type="idref" value="radioOn"/></state>
+    </style>
     <bind style="radiobutton" type="region" key="RadioButton"/>
 
     <style id="progressbar"><painter method="progressBarBackground" idref="painter"/>
@@ -102,14 +120,20 @@
         <opaque value="true"/>
         <state>
             <insets top="1" right="1" bottom="1" left="1"/>
-            <color value="#ffffff" type="BACKGROUND"/>
+            <color idref="bg" type="BACKGROUND"/>
         </state>
     </style>
     <bind style="scrollbarTrackStyle" type="REGION" key="ScrollBarTrack" />
 
     <style id="primary">
-        <state><color type="FOREGROUND" idref="primaryfg"/>
-            <color type="BACKGROUND" idref="primarybg"/> </state>
+        <state>
+            <color type="FOREGROUND" idref="primaryfg"/>
+            <color type="BACKGROUND" idref="primarybg"/>
+            <color type="TEXT_FOREGROUND" idref="bg"/>
+            <state value="MOUSE_OVER">
+                <color type="FOREGROUND" idref="focus"/>
+            </state>
+        </state>
     </style>
     <bind style="primary" type="name" key="primary"/>
 </synth>
