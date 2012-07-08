@@ -1,9 +1,8 @@
 package com.alexecollins.swing.plaf.overide;
 
-import com.alexecollins.swing.plaf.synth.template.DemoFrame;
+import com.alexecollins.swing.plaf.synth.template.demos.DemoFrame;
 
 import javax.swing.*;
-import javax.swing.plaf.synth.SynthLookAndFeel;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 

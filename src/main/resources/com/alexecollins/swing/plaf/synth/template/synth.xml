@@ -125,6 +125,11 @@
     </style>
     <bind style="scrollbarTrackStyle" type="REGION" key="ScrollBarTrack" />
 
+    <style id="title">
+        <font name="Lucida Sans Unicode" size="32" style="bold"/>
+    </style>
+    <bind style="title" type="name" key="title"/>
+
     <style id="primary">
         <state>
             <color type="FOREGROUND" idref="primaryfg"/>

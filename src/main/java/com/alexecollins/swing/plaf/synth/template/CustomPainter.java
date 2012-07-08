@@ -65,7 +65,14 @@ public class CustomPainter extends SynthPainter {
 		// For simplicity this always recreates the GradientPaint. In a
 		// real app you should cache this to avoid garbage.
 		return new GradientPaint(x, y, context.getStyle().getColor(context, ColorType.BACKGROUND),
-				x, y + h, context.getStyle().getColor(context, ColorType.FOREGROUND));
+				x, y + h, mix( context.getStyle().getColor(context, ColorType.BACKGROUND),  context.getStyle().getColor(context, ColorType.FOREGROUND)));
+	}
+
+	private Color mix(Color a, Color b) {
+		return new Color((a.getRed() + b.getRed()) / 2,
+				(a.getGreen() + b.getGreen()) / 2,
+				(a.getBlue() + b.getBlue()) / 2,
+				(a.getAlpha() + b.getAlpha()) / 2);
 	}
 
 	private void paintVerticalGradient(SynthContext context, Graphics g, int x, int y, int w, int h) {
