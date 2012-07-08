@@ -9,6 +9,8 @@ import java.util.Formatter;
 import java.util.TreeSet;
 
 /**
+ * A demo PLAF that override some defaults from the standard metal PLAF.
+ *
  * @author alex.e.c@gmail.com
  */
 public class OverridingLookAndFeel extends MetalLookAndFeel {

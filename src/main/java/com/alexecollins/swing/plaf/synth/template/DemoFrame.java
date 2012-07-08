@@ -2,11 +2,8 @@ package com.alexecollins.swing.plaf.synth.template;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.IntrospectionException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +20,8 @@ public class DemoFrame extends JFrame {
         // use name to target the frame
         getContentPane().setName("Frame");
 
-        JPanel panel1 = new JPanel(new GridLayout());
-        JPanel panel2 = new JPanel(new FlowLayout());
+        JPanel panel1 = new JPanel();
+        JPanel panel2 = new JPanel();
 
         final DefaultTableModel model = new DefaultTableModel(new String[]{"Key", "Value"},0);
         for (Map.Entry<Object, Object> entry : UIManager.getDefaults().entrySet()) {
