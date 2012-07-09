@@ -1,4 +1,4 @@
-package com.alexecollins.swing.plaf.synth.template.demos;
+package com.alexecollins.swing.synth.template;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -62,7 +62,6 @@ public class DemoFrame extends JFrame {
                 new JEditorPane() {{setText("EditorPane");}},
                 new JLabel("Label"),
                 new JList(new String[] {"List Item 0", "List Item 1", "List Item 2", "List Item 3"}) {{setSelectedIndex(1);}},
-                new JMenuBar(),
                 new JPasswordField("PasswordField"),
                 bar1,
 			    new JProgressBar() {{
@@ -84,11 +83,17 @@ public class DemoFrame extends JFrame {
         for (JComponent c : components) {
             final boolean l = c instanceof JColorChooser || c instanceof JFileChooser || c instanceof JScrollPane;
             final JPanel panel = l ? panel2 : panel1;
-	        c.setToolTipText(c.toString());
             panel.add(c);
         }
 
-        add(new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(panel1), new JScrollPane(panel2)));
+	    setJMenuBar(new JMenuBar() {{
+	        add(new JMenu("Menu") {{
+	            add(new JMenuItem("MenuItem"));
+	            addSeparator();
+		        add(new JMenuItem("MenuItem"));
+	        }});
+	    }});
+        getContentPane().add(new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(panel1), new JScrollPane(panel2)));
 
         pack();
     }

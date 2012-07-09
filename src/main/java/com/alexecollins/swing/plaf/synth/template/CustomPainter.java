@@ -106,7 +106,12 @@ public class CustomPainter extends SynthPainter {
 	    }
 	}
 
-    @Override
+	@Override
+	public void paintToolBarBackground(SynthContext synthContext, Graphics graphics, int i, int i1, int i2, int i3) {
+		paintPanelBackground(synthContext, graphics, i, i1, i2, i3);
+	}
+
+	@Override
     public void paintTextFieldBackground(SynthContext context,Graphics g, int x, int y,int w, int h) {
         paintBorder(context, g, x, y, w, h);
     }

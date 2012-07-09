@@ -1,6 +1,7 @@
-package com.alexecollins.swing.plaf.override;
+package com.alexecollins.swing.com.alexecollins.swing.synth.override;
 
-import com.alexecollins.swing.plaf.synth.template.demos.DemoFrame;
+import com.alexecollins.swing.plaf.override.OverridingLookAndFeel;
+import com.alexecollins.swing.synth.template.DemoFrame;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;

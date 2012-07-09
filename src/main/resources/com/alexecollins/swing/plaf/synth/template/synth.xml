@@ -5,7 +5,7 @@
 <synth>
     <object class="javax.swing.plaf.ColorUIResource" id="fg"><int>0</int><int>0</int><int>0</int></object>
     <object class="javax.swing.plaf.ColorUIResource" id="bg"><int>255</int><int>255</int><int>255</int></object>
-    <object class="javax.swing.plaf.ColorUIResource" id="focus"><int>50</int><int>50</int><int>127</int></object>
+    <object class="javax.swing.plaf.ColorUIResource" id="focus"><int>100</int><int>100</int><int>200</int></object>
     <object class="javax.swing.plaf.ColorUIResource" id="primaryfg"><int>0</int><int>0</int><int>0</int></object>
     <object class="javax.swing.plaf.ColorUIResource" id="primarybg"><int>100</int><int>100</int><int>255</int></object>
 
@@ -33,11 +33,13 @@
     <bind style="padding" type="region" key="ComboBox"/>
     <bind style="padding" type="region" key="PasswordField"/>
     <bind style="padding" type="region" key="TextField"/>
-    <bind style="padding" type="region" key="TextArea"/>
     <bind style="padding" type="region" key="EditorPane"/>
+    <bind style="padding" type="region" key="TextArea"/>
     <bind style="padding" type="region" key="List"/>
     <bind style="padding" type="region" key="Tree"/>
     <bind style="padding" type="region" key="OptionPane"/>
+    <bind style="padding" type="region" key="MenuBar"/>
+    <bind style="padding" type="region" key="MenuItem"/>
 
     <style id="panel">
         <painter method="panelBackground" idref="painter"/>
@@ -75,6 +77,10 @@
     <style id="editorpane"><opaque value="true"/>
         <painter method="textEditorPaneBackground" idref="painter"/></style>
     <bind style="editorpane" type="region" key="EditorPane"/>
+
+    <style id="toolBar"><painter idref="painter" method="toolBarBackground"/>
+        <insets bottom="2" left="2" right="2" top="2"/></style>
+    <bind style="toolBar" type="region" key="ToolBar"/>
 
     <style id="list"><painter method="listBackground" idref="painter"/>
         <state><color type="TEXT_BACKGROUND" idref="focus"/></state></style>
@@ -124,6 +130,28 @@
         </state>
     </style>
     <bind style="scrollbarTrackStyle" type="REGION" key="ScrollBarTrack" />
+
+    <style id="menuBar">
+        <opaque value="true" />
+        <state value="MOUSE_OVER">
+            <color idref="focus" type="BACKGROUND"/>
+        </state>
+    </style>
+    <bind style="menuBar" type="region" key="MenuBar" />
+    <style id="menu">
+        <opaque value="true" />
+        <state value="MOUSE_OVER">
+            <color idref="focus" type="BACKGROUND"/>
+        </state>
+    </style>
+    <bind style="menu" type="region" key="Menu" />
+    <style id="menuItem">
+        <opaque value="true" />
+        <state value="MOUSE_OVER">
+            <color idref="focus" type="BACKGROUND"/>
+        </state>
+    </style>
+    <bind style="menuItem" type="region" key="MenuItem" />
 
     <style id="title">
         <font name="Lucida Sans Unicode" size="32" style="bold"/>

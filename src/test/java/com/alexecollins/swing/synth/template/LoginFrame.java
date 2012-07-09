@@ -1,4 +1,4 @@
-package com.alexecollins.swing.plaf.synth.template.demos;
+package com.alexecollins.swing.synth.template;
 
 import javax.swing.*;
 import java.awt.*;
