@@ -1,4 +1,4 @@
-package com.alexecollins.swing.plaf.overide;
+package com.alexecollins.swing.plaf.override;
 
 import com.alexecollins.swing.plaf.synth.template.demos.DemoFrame;
 
